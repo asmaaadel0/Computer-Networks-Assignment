@@ -24,21 +24,21 @@ void Receiver::initialize()
 
 void Receiver::handleMessage(cMessage *msg)
 {
-    if (msg->getKind() == 0) {
-        const char *receivedString = msg->getName();
-        std::vector<std::bitset<8>> convertedBits = convertToVector(receivedString);
+    const char *receivedString = msg->getName();
+    std::vector<std::bitset<8>> convertedBits = convertToVector(receivedString);
 
-        bool hasError = checkForErrors(convertedBits);
+    bool hasError = checkForErrors(convertedBits);
 
-        if (hasError) {
-            EV << "Received message contains errors. Discarding it." << endl;
-        } else {
-            std::string originalMessage = processReceivedMessage(convertedBits);
-            EV << "Received original message: " << originalMessage << endl;
-        }
+    if (hasError) {
+        EV << "Received message contains errors. Discarding it." << endl;
+        msg->setName("Received with error, Send another one to me");
+    } else {
+        std::string originalMessage = processReceivedMessage(convertedBits);
+        EV << "Received original message: " << originalMessage << endl;
+        msg->setName("Received Successfully");
     }
+    send(msg, "out");
 
-    delete msg;
 }
 std::vector<std::bitset<8>> Receiver::convertToVector(const char *receivedString)
 {

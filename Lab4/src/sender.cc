@@ -27,7 +27,7 @@ void Sender::initialize()
     std::cout << "Enter a string: ";
     std::cin >> userInput;
 
-    std::cout << "message '" << userInput << "':" << std::endl;
+    EV << "message '" << userInput << "':" << endl;
 
 
     std::vector<std::bitset<8>> v = convertToVector(userInput);
@@ -41,7 +41,7 @@ void Sender::initialize()
     v.push_back(result);
 
     for (const std::bitset<8>& bits : v) {
-        std::cout << bits << std::endl;
+        EV << bits << endl;
     }
 
     std::vector<std::bitset<8> > VectorAfterError = generateError(v);
@@ -75,10 +75,10 @@ std::vector<std::bitset<8>> Sender::generateError(std::vector<std::bitset<8>> v)
         int position = distribution(gen);
         int elementToModify = rand() % v.size();
         v[elementToModify].flip(position);
-        std::cout << "There is a modification in element index = " << elementToModify << " bit position index = " << position << std::endl;
-        std::cout << "New bits : " << std::endl;
+        EV << "There is a modification in element index = " << elementToModify << " bit position index = " << position << endl;
+        EV << "New bits : " << endl;
         for (const std::bitset<8>& bits : v) {
-            std::cout << bits << std::endl;
+            EV << bits << endl;
         }
     }
     return v;
@@ -101,5 +101,35 @@ std::vector<std::bitset<8>> Sender::convertToVector(std::string userInput)
 
 void Sender::handleMessage(cMessage *msg)
 {
-    // TODO - Generated method body
+    std::string userInput;
+
+    std::cout << "Enter a string: ";
+    std::cin >> userInput;
+
+    EV << "message '" << userInput << "':" << endl;
+
+
+    std::vector<std::bitset<8>> v = convertToVector(userInput);
+
+    std::bitset<8> result(v[0]);
+
+    for (size_t i = 1; i < v.size(); ++i) {
+        result ^= v[i];
+    }
+
+    v.push_back(result);
+
+    for (const std::bitset<8>& bits : v) {
+        EV << bits << endl;
+    }
+
+    std::vector<std::bitset<8> > VectorAfterError = generateError(v);
+
+    std::string vectorAsString = convertToString(VectorAfterError);
+
+    cMessage *message = new cMessage("VectorMessage");
+    message->setKind(0);
+    message->setName(vectorAsString.c_str());
+
+    send(message, "out");
 }
