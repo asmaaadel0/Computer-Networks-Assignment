@@ -1,0 +1,24 @@
+version 3
+run General-0-20231201-02:06:22-11396
+attr configname General
+attr datetime 20231201-02:06:22
+attr datetimef 20231201-020622
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network lab4.Network
+attr processid 11396
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+config network lab4.Network
+
+par Network.sender typename "\"lab4.Sender\""
+par Network.receiver typename "\"lab4.Receiver\""
+par Network typename "\"lab4.Network\""
+

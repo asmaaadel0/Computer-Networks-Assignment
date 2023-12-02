@@ -35,12 +35,12 @@ void Receiver::handleMessage(cMessage *msg)
 
         if (hasError) {
             EV << "Received message contains errors. Discarding it." << endl;
-            mmsg->setM_Type(1);
+            mmsg->setM_Type(0);
             mmsg->setM_Payload("Received with error, Send another one to me");
         } else {
             std::string originalMessage = processReceivedMessage(convertedBits);
             EV << "Received original message: " << originalMessage << endl;
-            mmsg->setM_Type(0);
+            mmsg->setM_Type(1);
             mmsg->setM_Payload("Received Successfully");
         }
         send(mmsg, "out");

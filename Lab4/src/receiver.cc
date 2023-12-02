@@ -40,6 +40,7 @@ void Receiver::handleMessage(cMessage *msg)
     send(msg, "out");
 
 }
+
 std::vector<std::bitset<8>> Receiver::convertToVector(const char *receivedString)
 {
     std::istringstream iss(receivedString);

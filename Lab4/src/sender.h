@@ -33,6 +33,7 @@ class Sender : public cSimpleModule
     std::string convertToString(std::vector<std::bitset<8>> vectorBits);
     std::vector<std::bitset<8>> generateError(std::vector<std::bitset<8>> v);
     std::vector<std::bitset<8>> convertToVector(std::string userInput);
+    std::string senderLogic();
 };
 
 #endif

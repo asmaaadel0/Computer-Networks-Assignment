@@ -22,37 +22,24 @@ Define_Module(Sender);
 
 void Sender::initialize()
 {
-    std::string userInput;
-
-    std::cout << "Enter a string: ";
-    std::cin >> userInput;
-
-    EV << "message '" << userInput << "':" << endl;
-
-
-    std::vector<std::bitset<8>> v = convertToVector(userInput);
-
-    std::bitset<8> result(v[0]);
-
-    for (size_t i = 1; i < v.size(); ++i) {
-        result ^= v[i];
-    }
-
-    v.push_back(result);
-
-    for (const std::bitset<8>& bits : v) {
-        EV << bits << endl;
-    }
-
-    std::vector<std::bitset<8> > VectorAfterError = generateError(v);
-
-    std::string vectorAsString = convertToString(VectorAfterError);
+    std::string vectorAsString = senderLogic();
 
     cMessage *message = new cMessage("VectorMessage");
     message->setKind(0);
     message->setName(vectorAsString.c_str());
 
     send(message, "out");
+}
+
+
+void Sender::handleMessage(cMessage *msg)
+{
+
+    std::string vectorAsString = senderLogic();
+
+    msg->setName(vectorAsString.c_str());
+
+    send(msg, "out");
 }
 
 std::string Sender::convertToString(std::vector<std::bitset<8>> vectorBits)
@@ -99,7 +86,7 @@ std::vector<std::bitset<8>> Sender::convertToVector(std::string userInput)
     return v;
 }
 
-void Sender::handleMessage(cMessage *msg)
+std::string Sender::senderLogic()
 {
     std::string userInput;
 
@@ -125,11 +112,5 @@ void Sender::handleMessage(cMessage *msg)
 
     std::vector<std::bitset<8> > VectorAfterError = generateError(v);
 
-    std::string vectorAsString = convertToString(VectorAfterError);
-
-    cMessage *message = new cMessage("VectorMessage");
-    message->setKind(0);
-    message->setName(vectorAsString.c_str());
-
-    send(message, "out");
+    return convertToString(VectorAfterError);
 }
