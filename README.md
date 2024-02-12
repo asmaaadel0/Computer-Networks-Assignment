@@ -1,2 +1,2 @@
 # Computer-Networks-Assignment
-This is my solution for the Computer Networks Course programming assignments. Cairo University | Faculty of Engineering.
+This is our solution for the Computer Networks Course programming assignments. Cairo University | Faculty of Engineering.
