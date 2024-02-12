@@ -1,0 +1,27 @@
+version 3
+run General-0-20231014-23:28:33-17920
+attr configname General
+attr datetime 20231014-23:28:33
+attr datetimef 20231014-232833
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsd ""
+attr iterationvarsf ""
+attr measurement ""
+attr network lab2.Network
+attr processid 17920
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 522
+config network lab2.Network
+config seed-set 522
+
+par Network.player1 typename "\"lab2.Player1\""
+par Network.player1 secretNumber 2
+par Network.player2 typename "\"lab2.Player2\""
+par Network.player2 guessingNumber "int(uniform(0, 10))"
+par Network typename "\"lab2.Network\""
+
